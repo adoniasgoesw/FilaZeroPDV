@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+
+/* Figtree font family */
+body {
+    font-family: 'Figtree', sans-serif;
+}
+
+/* Hide scrollbar globally */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Custom animations for blur balls */
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+}
+
+@keyframes floatReverse {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(-30px, 30px) scale(0.9);
+    }
+    66% {
+        transform: translate(20px, -20px) scale(1.1);
+    }
+}
+
+@keyframes floatSlow {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(50px, -50px);
+    }
+}
+
+@keyframes floatSlowReverse {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(-50px, 50px);
+    }
+}
+
+.animate-float {
+    animation: float 20s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+    animation: floatReverse 25s ease-in-out infinite;
+}
+
+.animate-float-slow {
+    animation: floatSlow 30s ease-in-out infinite;
+}
+
+.animate-float-slow-reverse {
+    animation: floatSlowReverse 35s ease-in-out infinite;
+}
