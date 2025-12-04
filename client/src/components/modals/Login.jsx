@@ -79,37 +79,37 @@ export default function Login({ onSwitchToSignUp, onClose }) {
 
     if (showForgotPassword) {
         return (
-            <div className="bg-white rounded-3xl shadow-2xl w-full h-[600px] flex flex-col overflow-hidden absolute -top-10 right-0 z-50">
-                <div className="p-8 flex-1 flex flex-col">
-                <div className="mb-6">
-                    <h2 className="text-3xl font-bold text-gray-900">Esqueceu senha</h2>
+            <div className="bg-white rounded-xl md:rounded-3xl shadow-2xl w-full h-auto md:h-[600px] max-h-[335px] md:max-h-none flex flex-col overflow-hidden relative md:absolute md:-top-10 md:right-0 z-50">
+                <div className="p-3 md:p-8 flex-1 flex flex-col">
+                <div className="mb-2 md:mb-6">
+                    <h2 className="text-base md:text-3xl font-bold text-gray-900">Esqueceu senha</h2>
                 </div>
                     <form onSubmit={handleForgotPassword} className="flex-1 flex flex-col">
-                        <div className="space-y-6 flex-1 flex flex-col">
+                        <div className="space-y-2 md:space-y-6 flex-1 flex flex-col">
                             <div>
-                                <label className="block text-sm font-medium text-gray-900 mb-3">
+                                <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                     CPF
                                 </label>
                                 <div className="relative">
-                                    <CreditCard className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                    <CreditCard className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 h-3 md:w-5 md:h-5" />
                                     <input
                                         type="text"
                                         value={cpf}
                                         onChange={(e) => setCpf(e.target.value)}
                                         required
-                                        className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900"
+                                        className="w-full pl-8 md:pl-12 pr-2 md:pr-4 py-1.5 md:py-3 bg-white border border-gray-200 rounded-md md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-xs md:text-base text-gray-900"
                                         placeholder="000.000.000-00"
                                     />
                                 </div>
                             </div>
-                            <div className="pt-2">
+                            <div className="pt-1 md:pt-2">
                                 <Access type="login" onClick={handleForgotPassword} />
                             </div>
-                            <div className="text-center pt-2">
+                            <div className="text-center pt-1 md:pt-2">
                                 <button
                                     type="button"
                                     onClick={() => setShowForgotPassword(false)}
-                                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                                    className="text-[10px] md:text-sm text-gray-600 hover:text-gray-900 transition-colors"
                                 >
                                     Voltar ao login
                                 </button>
@@ -122,52 +122,52 @@ export default function Login({ onSwitchToSignUp, onClose }) {
     }
 
     return (
-        <div className="bg-white rounded-3xl shadow-2xl w-full h-[600px] flex flex-col overflow-hidden absolute -top-10 right-0 z-50">
-            <div className="p-8 flex-1 flex flex-col">
-                <div className="mb-6">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Bem-vindo de volta!</h2>
-                    <p className="text-gray-600 text-sm">Faça login para acessar o sistema.</p>
+        <div className="bg-white rounded-xl md:rounded-3xl shadow-2xl w-full h-auto md:h-[600px] max-h-[320px] md:max-h-none flex flex-col overflow-hidden relative md:absolute md:-top-10 md:right-0 z-50">
+            <div className="p-3 md:p-8 flex-1 flex flex-col">
+                <div className="mb-2 md:mb-6">
+                    <h2 className="text-base md:text-3xl font-bold text-gray-900 mb-0.5 md:mb-2">Bem-vindo de volta!</h2>
+                    <p className="text-gray-600 text-[10px] md:text-sm">Faça login para acessar o sistema.</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
-                    <div className="space-y-5 flex-1 flex flex-col">
-                        <div className="space-y-5">
+                    <div className="space-y-2 md:space-y-5 flex-1 flex flex-col">
+                        <div className="space-y-2 md:space-y-5">
                             <div>
-                                <label className="block text-sm font-medium text-gray-900 mb-3">
+                                <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                     CPF
                                 </label>
                                 <div className="relative">
-                                    <CreditCard className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                    <CreditCard className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 h-3 md:w-5 md:h-5" />
                                     <input
                                         type="text"
                                         value={cpf}
                                         onChange={(e) => setCpf(e.target.value)}
                                         required
-                                        className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                        className="w-full pl-8 md:pl-12 pr-2 md:pr-4 py-1.5 md:py-3 bg-white border border-gray-200 rounded-md md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-xs md:text-base text-gray-900 placeholder-gray-400"
                                         placeholder="000.000.000-00"
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-900 mb-3">
+                                <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                     Senha
                                 </label>
                                 <div className="relative">
-                                    <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                    <Lock className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 h-3 md:w-5 md:h-5" />
                                     <input
                                         type={showPassword ? 'text' : 'password'}
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         required
-                                        className="w-full pl-12 pr-12 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                        className="w-full pl-10 md:pl-12 pr-10 md:pr-12 py-2 md:py-3 bg-white border border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-sm md:text-base text-gray-900 placeholder-gray-400"
                                         placeholder="Digite sua senha"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors"
+                                        className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors"
                                     >
-                                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                        {showPassword ? <EyeOff className="w-3 h-3 md:w-5 md:h-5" /> : <Eye className="w-3 h-3 md:w-5 md:h-5" />}
                                     </button>
                                 </div>
                             </div>
@@ -177,23 +177,23 @@ export default function Login({ onSwitchToSignUp, onClose }) {
                                         type="checkbox"
                                         checked={rememberMe}
                                         onChange={(e) => setRememberMe(e.target.checked)}
-                                        className="w-4 h-4 text-gray-900 border-gray-300 rounded focus:ring-emerald-600 focus:ring-2"
+                                        className="w-3 h-3 md:w-4 md:h-4 text-gray-900 border-gray-300 rounded focus:ring-emerald-600 focus:ring-2"
                                     />
-                                    <span className="ml-2 text-sm text-gray-600">Lembrar-me</span>
+                                    <span className="ml-1.5 md:ml-2 text-[10px] md:text-sm text-gray-600">Lembrar-me</span>
                                 </label>
                                 <button
                                     type="button"
                                     onClick={() => setShowForgotPassword(true)}
-                                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                                    className="text-[10px] md:text-sm text-gray-600 hover:text-gray-900 transition-colors"
                                 >
                                     Esqueceu a senha?
                                 </button>
                             </div>
                         </div>
-                        <div className="pt-2">
+                        <div className="pt-1 md:pt-2">
                             <Access type="login" onClick={handleSubmit} disabled={isLoading} />
                         </div>
-                        <div className="text-center pt-2">
+                        <div className="text-center pt-1 md:pt-2">
                             <span className="text-sm text-gray-600">Não possui conta? </span>
                             <button
                                 type="button"

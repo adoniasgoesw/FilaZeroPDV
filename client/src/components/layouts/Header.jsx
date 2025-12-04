@@ -1,13 +1,13 @@
 export default function Header() {
     return (
-        <header className="w-full fixed top-0 left-0 right-0 px-10 pt-10 z-40 ">
-            <div className="w-full px-6 py-4">
-                <div className="flex items-center gap-3">
+        <header className="w-full fixed top-0 left-0 right-0 px-4 md:px-10 pt-4 md:pt-10 z-40">
+            <div className="w-full px-3 md:px-6 py-2 md:py-4">
+                <div className="flex items-center gap-2 md:gap-3">
                     {/* Logo SVG from index.html */}
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 32 32"
-                        className="w-8 h-8"
+                        className="w-6 h-6 md:w-8 md:h-8"
                     >
                         <rect width="32" height="32" rx="8" fill="#111827" />
                         <path
@@ -21,7 +21,7 @@ export default function Header() {
                         />
                     </svg>
                     {/* Title */}
-                    <h1 className="text-2xl font-bold text-gray-900">FilaZero PDV</h1>
+                    <h1 className="text-lg md:text-2xl font-bold text-gray-900">FilaZero PDV</h1>
                 </div>
             </div>
         </header>
