@@ -1,8 +1,7 @@
-import { Home, Clock, ChefHat, Truck, Settings, Zap } from 'lucide-react';
+import { Home, Clock, ChefHat, Truck, Settings } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import LogoutButton from '../buttons/LogoutButton.jsx';
 
-export default function Sidebar() {
+export default function Footer() {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -14,24 +13,9 @@ export default function Sidebar() {
         { icon: Settings, label: 'Configurações', path: '/settings' },
     ];
 
-    const handleLogout = () => {
-        localStorage.removeItem('userId');
-        localStorage.removeItem('businessId');
-        localStorage.removeItem('userName');
-        navigate('/');
-    };
-
     return (
-        <div className="mobile-hide w-20 h-[100dvh] bg-white flex-col items-center py-6 fixed left-0 top-0 z-50 border-r border-gray-200">
-            {/* Logo */}
-            <div className="mb-8">
-                <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-                    <Zap className="w-6 h-6 text-white" />
-                </div>
-            </div>
-
-            {/* Menu Items */}
-            <div className="flex flex-col gap-2 w-full px-2 flex-1">
+        <div className="mobile-show fixed bottom-0 left-0 right-0 h-20 bg-white border-t border-gray-200 items-center justify-center z-50 safe-area-bottom">
+            <div className="flex items-center justify-around w-full px-4 max-w-md mx-auto">
                 {menuItems.map((item, index) => {
                     const Icon = item.icon;
                     const isActive = location.pathname === item.path;
@@ -39,7 +23,7 @@ export default function Sidebar() {
                         <button
                             key={index}
                             onClick={() => navigate(item.path)}
-                            className={`w-full flex items-center justify-center py-3 rounded-xl transition-all duration-200 group ${
+                            className={`flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-200 ${
                                 isActive 
                                     ? 'bg-blue-50' 
                                     : 'hover:bg-gray-50'
@@ -54,18 +38,14 @@ export default function Sidebar() {
                                 <Icon className={`w-5 h-5 transition-all duration-200 ${
                                     isActive 
                                         ? 'text-blue-600' 
-                                        : 'text-gray-500 group-hover:text-gray-700'
+                                        : 'text-gray-500'
                                 }`} />
                             </div>
                         </button>
                     );
                 })}
             </div>
-
-            {/* Logout Button */}
-            <div className="mt-auto w-full px-2">
-                <LogoutButton onClick={handleLogout} />
-            </div>
         </div>
     );
 }
+

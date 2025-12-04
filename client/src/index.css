@@ -1,8 +1,29 @@
 @import 'tailwindcss';
 
 /* Figtree font family */
-body {
+html, body {
     font-family: 'Figtree', sans-serif;
+    height: 100%;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    height: 100%;
+    height: 100dvh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Ensure all page containers use safe viewport */
+.page-container {
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: 100%;
+    height: 100dvh;
+    overflow-x: hidden;
 }
 
 /* Hide scrollbar globally */
@@ -72,4 +93,65 @@ body {
 
 .animate-float-slow-reverse {
     animation: floatSlowReverse 35s ease-in-out infinite;
+}
+
+/* Custom breakpoint for mobile (below 700px) */
+@media (max-width: 700px) {
+    .mobile-hide {
+        display: none !important;
+    }
+    
+    .mobile-show {
+        display: flex !important;
+    }
+    
+    .mobile-ml-0 {
+        margin-left: 0 !important;
+    }
+    
+    .mobile-pb-20 {
+        padding-bottom: 5rem !important;
+    }
+    
+    /* Safe area for mobile browsers */
+    .safe-viewport {
+        min-height: 100vh;
+        min-height: 100dvh;
+        height: 100%;
+        height: 100dvh;
+    }
+    
+    .safe-area-bottom {
+        padding-bottom: env(safe-area-inset-bottom, 0);
+        bottom: env(safe-area-inset-bottom, 0);
+    }
+    
+    /* Ensure content doesn't get cut by browser UI */
+    .page-content {
+        padding-top: env(safe-area-inset-top, 0);
+        padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+}
+
+@media (min-width: 701px) {
+    .mobile-hide {
+        display: flex !important;
+    }
+    
+    .mobile-show {
+        display: none !important;
+    }
+    
+    .mobile-ml-0 {
+        margin-left: 5rem !important;
+    }
+    
+    .mobile-pb-20 {
+        padding-bottom: 0 !important;
+    }
+    
+    .safe-viewport {
+        min-height: 100vh;
+        height: 100%;
+    }
 }
