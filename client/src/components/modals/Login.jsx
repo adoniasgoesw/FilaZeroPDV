@@ -38,6 +38,10 @@ export default function Login({ onSwitchToSignUp, onClose }) {
             localStorage.setItem('userId', response.data.user.id);
             localStorage.setItem('businessId', response.data.user.businessId);
             localStorage.setItem('userName', response.data.user.fullName);
+            localStorage.setItem('userCpf', response.data.user.cpf);
+            localStorage.setItem('userRole', response.data.user.role);
+            localStorage.setItem('businessName', response.data.user.business.name);
+            localStorage.setItem('businessCnpj', response.data.user.business.cnpj || '');
 
             // Só mostrar a tela verde após login bem-sucedido
             setIsLoading(false);
