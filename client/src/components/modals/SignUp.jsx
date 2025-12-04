@@ -105,19 +105,19 @@ export default function SignUp({ onSwitchToLogin, onClose }) {
     };
 
     return (
-        <div className="bg-white rounded-3xl shadow-2xl w-full h-[600px] flex flex-col overflow-hidden absolute -top-10 right-0 z-50">
-            <div className="p-8 flex-1 flex flex-col">
-                <div className="mb-6">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Criar conta</h2>
-                    <p className="text-gray-600 text-sm">{stepTitles[step]}</p>
+        <div className="bg-white rounded-xl md:rounded-3xl shadow-2xl w-full h-auto md:h-[600px] max-h-[335px] md:max-h-none flex flex-col overflow-hidden relative md:absolute md:-top-10 md:right-0 z-50">
+            <div className="p-3 md:p-8 flex-1 flex flex-col">
+                <div className="mb-2 md:mb-6">
+                    <h2 className="text-base md:text-3xl font-bold text-gray-900 mb-0.5 md:mb-2">Criar conta</h2>
+                    <p className="text-gray-600 text-[10px] md:text-sm">{stepTitles[step]}</p>
                 </div>
 
                 {/* Progress indicator */}
-                <div className="flex gap-2 mb-6">
+                <div className="flex gap-1.5 md:gap-2 mb-2 md:mb-6">
                     {[1, 2, 3].map((s) => (
                         <div
                             key={s}
-                            className={`h-2 flex-1 rounded-full transition-all ${
+                            className={`h-1 md:h-2 flex-1 rounded-full transition-all ${
                                 s <= step ? 'bg-emerald-600' : 'bg-gray-200'
                             }`}
                         />
@@ -127,52 +127,52 @@ export default function SignUp({ onSwitchToLogin, onClose }) {
                 <form onSubmit={handleSubmit} className="flex-1 flex flex-col">
                     {/* Step 1: User Data */}
                     {step === 1 && (
-                        <div className="space-y-5 flex-1 flex flex-col">
-                            <div className="space-y-5">
+                        <div className="space-y-2 md:space-y-5 flex-1 flex flex-col">
+                            <div className="space-y-2 md:space-y-5">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                         Nome completo
                                     </label>
                                     <div className="relative">
-                                        <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <User className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-3 h-3 md:w-5 md:h-5" />
                                         <input
                                             type="text"
                                             value={fullName}
                                             onChange={(e) => setFullName(e.target.value)}
                                             required
-                                            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                            className="w-full pl-8 md:pl-12 pr-2 md:pr-4 py-1.5 md:py-3 bg-white border border-gray-200 rounded-md md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-xs md:text-base text-gray-900 placeholder-gray-400"
                                             placeholder="Digite seu nome completo"
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                         E-mail
                                     </label>
                                     <div className="relative">
-                                        <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <Mail className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                         <input
                                             type="email"
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             required
-                                            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                            className="w-full pl-8 md:pl-12 pr-2 md:pr-4 py-1.5 md:py-3 bg-white border border-gray-200 rounded-md md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-xs md:text-base text-gray-900 placeholder-gray-400"
                                             placeholder="seu@email.com"
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                         WhatsApp
                                     </label>
                                     <div className="relative">
-                                        <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <Phone className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                         <input
                                             type="tel"
                                             value={whatsapp}
                                             onChange={(e) => setWhatsapp(e.target.value)}
                                             required
-                                            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                            className="w-full pl-8 md:pl-12 pr-2 md:pr-4 py-1.5 md:py-3 bg-white border border-gray-200 rounded-md md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-xs md:text-base text-gray-900 placeholder-gray-400"
                                             placeholder="(00) 00000-0000"
                                         />
                                     </div>
@@ -196,26 +196,26 @@ export default function SignUp({ onSwitchToLogin, onClose }) {
 
                     {/* Step 2: Establishment Data */}
                     {step === 2 && (
-                        <div className="space-y-5 flex-1 flex flex-col">
-                            <div className="space-y-5">
+                        <div className="space-y-2 md:space-y-5 flex-1 flex flex-col">
+                            <div className="space-y-2 md:space-y-5">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                         Nome do estabelecimento
                                     </label>
                                     <div className="relative">
-                                        <Building className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <Building className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                         <input
                                             type="text"
                                             value={establishmentName}
                                             onChange={(e) => setEstablishmentName(e.target.value)}
                                             required
-                                            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                            className="w-full pl-8 md:pl-12 pr-2 md:pr-4 py-1.5 md:py-3 bg-white border border-gray-200 rounded-md md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-xs md:text-base text-gray-900 placeholder-gray-400"
                                             placeholder="Nome do seu estabelecimento"
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                         CNPJ do estabelecimento <span className="text-gray-500 text-xs font-normal">(opcional)</span>
                                     </label>
                                     <div className="relative">
@@ -224,23 +224,23 @@ export default function SignUp({ onSwitchToLogin, onClose }) {
                                             type="text"
                                             value={cnpj}
                                             onChange={(e) => setCnpj(e.target.value)}
-                                            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                            className="w-full pl-8 md:pl-12 pr-2 md:pr-4 py-1.5 md:py-3 bg-white border border-gray-200 rounded-md md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-xs md:text-base text-gray-900 placeholder-gray-400"
                                             placeholder="00.000.000/0000-00"
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                         Endereço completo
                                     </label>
                                     <div className="relative">
-                                        <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <MapPin className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                         <input
                                             type="text"
                                             value={address}
                                             onChange={(e) => setAddress(e.target.value)}
                                             required
-                                            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                            className="w-full pl-8 md:pl-12 pr-2 md:pr-4 py-1.5 md:py-3 bg-white border border-gray-200 rounded-md md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-xs md:text-base text-gray-900 placeholder-gray-400"
                                             placeholder="Digite o endereço completo"
                                         />
                                     </div>
@@ -256,67 +256,67 @@ export default function SignUp({ onSwitchToLogin, onClose }) {
 
                     {/* Step 3: Access Data */}
                     {step === 3 && (
-                        <div className="space-y-5 flex-1 flex flex-col">
-                            <div className="space-y-5">
+                        <div className="space-y-2 md:space-y-5 flex-1 flex flex-col">
+                            <div className="space-y-2 md:space-y-5">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                         CPF
                                     </label>
                                     <div className="relative">
-                                        <FileText className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <FileText className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                         <input
                                             type="text"
                                             value={cpf}
                                             onChange={(e) => setCpf(e.target.value)}
                                             required
-                                            className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                            className="w-full pl-8 md:pl-12 pr-2 md:pr-4 py-1.5 md:py-3 bg-white border border-gray-200 rounded-md md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-xs md:text-base text-gray-900 placeholder-gray-400"
                                             placeholder="000.000.000-00"
                                         />
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                         Senha
                                     </label>
                                     <div className="relative">
-                                        <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <Lock className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                         <input
                                             type={showPassword ? 'text' : 'password'}
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
                                             required
-                                            className="w-full pl-12 pr-12 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                            className="w-full pl-10 md:pl-12 pr-10 md:pr-12 py-2 md:py-3 bg-white border border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-sm md:text-base text-gray-900 placeholder-gray-400"
                                             placeholder="Digite sua senha"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors"
+                                            className="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors"
                                         >
-                                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                            {showPassword ? <EyeOff className="w-4 h-4 md:w-5 md:h-5" /> : <Eye className="w-4 h-4 md:w-5 md:h-5" />}
                                         </button>
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                                    <label className="block text-[10px] md:text-sm font-medium text-gray-900 mb-1 md:mb-3">
                                         Confirmar senha
                                     </label>
                                     <div className="relative">
-                                        <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                                        <Lock className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                                         <input
                                             type={showConfirmPassword ? 'text' : 'password'}
                                             value={confirmPassword}
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                             required
-                                            className="w-full pl-12 pr-12 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-gray-900 placeholder-gray-400"
+                                            className="w-full pl-10 md:pl-12 pr-10 md:pr-12 py-2 md:py-3 bg-white border border-gray-200 rounded-lg md:rounded-xl focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 outline-none transition-all text-sm md:text-base text-gray-900 placeholder-gray-400"
                                             placeholder="Confirme sua senha"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors"
+                                            className="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-900 transition-colors"
                                         >
-                                            {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                            {showConfirmPassword ? <EyeOff className="w-4 h-4 md:w-5 md:h-5" /> : <Eye className="w-4 h-4 md:w-5 md:h-5" />}
                                         </button>
                                     </div>
                                 </div>

@@ -20,7 +20,7 @@ export default function Back({ onClick, variant = 'text', disabled = false, chil
             type="button"
             onClick={onClick}
             disabled={disabled}
-            className="px-6 py-3 bg-gray-200 text-gray-900 rounded-xl hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+            className="px-3 md:px-6 py-2 md:py-3 bg-gray-200 text-gray-900 rounded-lg md:rounded-xl hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium text-xs md:text-base"
         >
             {children || 'Anterior'}
         </button>

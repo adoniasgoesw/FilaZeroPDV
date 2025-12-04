@@ -20,7 +20,7 @@ export default function Next({ onClick, variant = 'text', disabled = false, chil
             type="button"
             onClick={onClick}
             disabled={disabled}
-            className="px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 active:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
+            className="px-3 md:px-6 py-2 md:py-3 bg-emerald-600 text-white rounded-lg md:rounded-xl hover:bg-emerald-700 active:bg-emerald-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium text-xs md:text-base shadow-lg hover:shadow-xl"
         >
             {children || 'Próximo'}
         </button>

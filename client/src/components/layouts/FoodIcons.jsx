@@ -31,7 +31,7 @@ export default function FoodIcons() {
                     <img 
                         src={pos.img} 
                         alt={pos.alt} 
-                        className="w-40 h-40 opacity-20" 
+                        className="w-12 h-12 md:w-20 lg:w-24 opacity-10 md:opacity-15" 
                     />
                 </div>
             ))}
@@ -49,7 +49,7 @@ export default function FoodIcons() {
                     <img 
                         src={pos.img} 
                         alt={pos.alt} 
-                        className="w-40 h-40 opacity-20" 
+                        className="w-12 h-12 md:w-20 lg:w-24 opacity-10 md:opacity-15" 
                     />
                 </div>
             ))}
@@ -67,7 +67,7 @@ export default function FoodIcons() {
                     <img 
                         src={pos.img} 
                         alt={pos.alt} 
-                        className="w-40 h-40 opacity-20" 
+                        className="w-12 h-12 md:w-20 lg:w-24 opacity-10 md:opacity-15" 
                     />
                 </div>
             ))}
