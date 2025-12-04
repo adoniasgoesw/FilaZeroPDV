@@ -58,7 +58,7 @@ export default function SignUp({ onSwitchToLogin, onClose }) {
         setIsLoading(true);
 
         try {
-            const response = await api.post('/api/register', {
+            const response = await api.post('/register', {
                 fullName,
                 email,
                 whatsapp,

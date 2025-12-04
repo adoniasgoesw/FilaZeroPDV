@@ -29,7 +29,7 @@ export default function Login({ onSwitchToSignUp, onClose }) {
         setIsLoading(true);
 
         try {
-            const response = await api.post('/api/login', {
+            const response = await api.post('/login', {
                 cpf,
                 password
             });
