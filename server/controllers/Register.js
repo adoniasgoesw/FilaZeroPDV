@@ -76,6 +76,22 @@ export const register = async (req, res) => {
             [businessId, fullName, email, whatsapp, cpf, hashedPassword]
         );
 
+        // 3. Criar pontos de atendimento padrão (4 mesas ativadas)
+        await client.query(
+            `INSERT INTO service_points (
+                business_id,
+                counters_enabled,
+                counters_quantity,
+                tables_enabled,
+                tables_quantity,
+                order_slips_enabled,
+                order_slips_quantity,
+                created_at,
+                updated_at
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)`,
+            [businessId, false, 0, true, 4, false, 0]
+        );
+
         await client.query('COMMIT');
 
         res.status(201).json({

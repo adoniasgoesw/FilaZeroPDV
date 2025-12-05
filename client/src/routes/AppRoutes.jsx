@@ -5,6 +5,7 @@ import History from '../pages/History.jsx';
 import Kitchen from '../pages/Kitchen.jsx';
 import Delivery from '../pages/Delivery.jsx';
 import Settings from '../pages/Settings.jsx';
+import ServicePoint from '../pages/ServicePoint.jsx';
 import Clients from '../pages/management/Clients.jsx';
 import Users from '../pages/management/Users.jsx';
 import Payments from '../pages/management/Payments.jsx';
@@ -20,6 +21,7 @@ export default function AppRoutes() {
             <Route path="/kitchen" element={<Kitchen />} />
             <Route path="/delivery" element={<Delivery />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/service-point/:pointId" element={<ServicePoint />} />
             <Route path="/management/clients" element={<Clients />} />
             <Route path="/management/users" element={<Users />} />
             <Route path="/management/payments" element={<Payments />} />

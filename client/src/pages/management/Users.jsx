@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/layouts/Sidebar.jsx';
 import Footer from '../../components/layouts/Footer.jsx';
@@ -6,9 +6,12 @@ import SearchBar from '../../components/layouts/SearchBar.jsx';
 import AddButton from '../../components/buttons/AddButton.jsx';
 import Back from '../../components/buttons/Back.jsx';
 import ListUsers from '../../components/lists/ListUsers.jsx';
+import ModalBase from '../../components/modals/ModalBase.jsx';
+import FormUser from '../../components/forms/FormUser.jsx';
 
 export default function Users() {
     const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
@@ -21,7 +24,17 @@ export default function Users() {
     }, [navigate]);
 
     const handleAdd = () => {
-        console.log('Adicionar novo usuário');
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleSubmit = (data) => {
+        console.log('Dados do formulário:', data);
+        // Aqui você pode adicionar a lógica para salvar
+        setIsModalOpen(false);
     };
 
     const handleSearch = (term) => {
@@ -54,6 +67,15 @@ export default function Users() {
                 </div>
             </div>
             <Footer />
+            
+            {/* Modal */}
+            <ModalBase 
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title="Adicionar Usuário"
+            >
+                <FormUser onSubmit={handleSubmit} />
+            </ModalBase>
         </div>
     );
 }

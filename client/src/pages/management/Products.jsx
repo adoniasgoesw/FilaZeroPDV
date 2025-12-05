@@ -8,19 +8,30 @@ import Back from '../../components/buttons/Back.jsx';
 import Tabs from '../../components/layouts/Tabs.jsx';
 import ListProducts from '../../components/lists/ListProducts.jsx';
 import ListComplementos from '../../components/lists/ListComplementos.jsx';
+import ModalBase from '../../components/modals/ModalBase.jsx';
+import FormProduct from '../../components/forms/FormProduct.jsx';
+import FormComplement from '../../components/forms/FormComplement.jsx';
+
+import api from '../../services/api.js';
 
 export default function Products() {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('products');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingProduct, setEditingProduct] = useState(null);
+    const [businessId, setBusinessId] = useState(null);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
-        const businessId = localStorage.getItem('businessId');
+        const bid = localStorage.getItem('businessId');
 
-        if (!userId || !businessId) {
+        if (!userId || !bid) {
             navigate('/');
             return;
         }
+
+        setBusinessId(bid);
     }, [navigate]);
 
     const tabs = [
@@ -29,11 +40,68 @@ export default function Products() {
     ];
 
     const handleAdd = () => {
-        if (activeTab === 'products') {
-            console.log('Adicionar novo produto');
-        } else {
-            console.log('Adicionar novo complemento');
+        setEditingProduct(null);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setEditingProduct(null);
+    };
+
+    const handleSubmit = async (formData) => {
+        try {
+            const formDataToSend = new FormData();
+            formDataToSend.append('business_id', businessId);
+            formDataToSend.append('category_id', formData.categoryId);
+            formDataToSend.append('name', formData.name);
+            
+            if (formData.image) {
+                formDataToSend.append('image', formData.image);
+            }
+
+            if (formData.purchasePrice) {
+                formDataToSend.append('purchase_price', formData.purchasePrice);
+            }
+            if (formData.salePrice) {
+                formDataToSend.append('sale_price', formData.salePrice);
+            }
+            if (formData.stock) {
+                formDataToSend.append('stock', formData.stock);
+            }
+            if (formData.preparationTime) {
+                formDataToSend.append('preparation_time', formData.preparationTime);
+            }
+
+            if (editingProduct) {
+                // Atualizar produto
+                formDataToSend.append('id', editingProduct.id);
+                await api.put('/products', formDataToSend, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            } else {
+                // Criar produto
+                await api.post('/products', formDataToSend, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            }
+
+            setIsModalOpen(false);
+            setEditingProduct(null);
+            setRefreshTrigger(prev => prev + 1);
+        } catch (error) {
+            console.error('Erro ao salvar produto:', error);
+            alert('Erro ao salvar produto. Tente novamente.');
         }
+    };
+
+    const handleEdit = (product) => {
+        setEditingProduct(product);
+        setIsModalOpen(true);
     };
 
     const handleSearch = (term) => {
@@ -71,10 +139,39 @@ export default function Products() {
                 </div>
 
                 <div className="flex-1 px-4 md:px-6 pb-4 md:pb-6 overflow-hidden">
-                    {activeTab === 'products' ? <ListProducts /> : <ListComplementos />}
+                    {activeTab === 'products' ? (
+                        businessId && (
+                            <ListProducts 
+                                businessId={businessId}
+                                onEdit={handleEdit}
+                                onDelete={() => setRefreshTrigger(prev => prev + 1)}
+                                refreshTrigger={refreshTrigger}
+                            />
+                        )
+                    ) : (
+                        <ListComplementos />
+                    )}
                 </div>
             </div>
             <Footer />
+            
+            {/* Modal */}
+            <ModalBase 
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title={activeTab === 'products' ? (editingProduct ? 'Editar Produto' : 'Adicionar Produto') : 'Adicionar Complemento'}
+                formId="form-product"
+            >
+                {activeTab === 'products' ? (
+                    <FormProduct 
+                        onSubmit={handleSubmit} 
+                        initialData={editingProduct}
+                        businessId={businessId}
+                    />
+                ) : (
+                    <FormComplement onSubmit={handleSubmit} />
+                )}
+            </ModalBase>
         </div>
     );
 }
