@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/layouts/Sidebar.jsx';
 import Footer from '../../components/layouts/Footer.jsx';
@@ -6,9 +6,12 @@ import SearchBar from '../../components/layouts/SearchBar.jsx';
 import AddButton from '../../components/buttons/AddButton.jsx';
 import Back from '../../components/buttons/Back.jsx';
 import ListPayments from '../../components/lists/ListPayments.jsx';
+import ModalBase from '../../components/modals/ModalBase.jsx';
+import FormPayment from '../../components/forms/FormPayment.jsx';
 
 export default function Payments() {
     const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const userId = localStorage.getItem('userId');
@@ -21,7 +24,17 @@ export default function Payments() {
     }, [navigate]);
 
     const handleAdd = () => {
-        console.log('Adicionar nova forma de pagamento');
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleSubmit = (data) => {
+        console.log('Dados do formulário:', data);
+        // Aqui você pode adicionar a lógica para salvar
+        setIsModalOpen(false);
     };
 
     const handleSearch = (term) => {
@@ -54,6 +67,15 @@ export default function Payments() {
                 </div>
             </div>
             <Footer />
+            
+            {/* Modal */}
+            <ModalBase 
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                title="Adicionar Pagamento"
+            >
+                <FormPayment onSubmit={handleSubmit} />
+            </ModalBase>
         </div>
     );
 }

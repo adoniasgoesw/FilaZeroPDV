@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 
-export default function ActionsButton({ onToggleStatus, onEdit, onDelete }) {
+export default function ActionsButton({ onToggleStatus, onEdit, onDelete, showEdit = true }) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -44,12 +44,14 @@ export default function ActionsButton({ onToggleStatus, onEdit, onDelete }) {
                     >
                         Ativar/Desativar
                     </button>
-                    <button
-                        onClick={() => handleAction(onEdit)}
-                        className="w-full px-4 py-2 text-left text-xs text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                        Editar
-                    </button>
+                    {showEdit && onEdit && (
+                        <button
+                            onClick={() => handleAction(onEdit)}
+                            className="w-full px-4 py-2 text-left text-xs text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                            Editar
+                        </button>
+                    )}
                     <button
                         onClick={() => handleAction(onDelete)}
                         className="w-full px-4 py-2 text-left text-xs text-red-600 hover:bg-red-50 transition-colors"

@@ -1,29 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ListBase from './ListBase.jsx';
 import StatusButton from '../buttons/StatusButton.jsx';
 import EditButton from '../buttons/EditButton.jsx';
 import DeleteButton from '../buttons/DeleteButton.jsx';
 import ActionsButton from '../buttons/ActionsButton.jsx';
+import api from '../../services/api.js';
 
-// Dados fictícios
-const mockProducts = [
-    { id: 1, name: 'Hambúrguer Artesanal', category: 'Lanches', price: 'R$ 25,90', stock: 50, active: true, image: '🍔' },
-    { id: 2, name: 'Pizza Margherita', category: 'Pizzas', price: 'R$ 35,00', stock: 30, active: true, image: '🍕' },
-    { id: 3, name: 'Coca-Cola 350ml', category: 'Bebidas', price: 'R$ 5,50', stock: 100, active: true, image: '🥤' },
-    { id: 4, name: 'Batata Frita', category: 'Acompanhamentos', price: 'R$ 12,00', stock: 0, active: false, image: '🍟' },
-    { id: 5, name: 'Salada Caesar', category: 'Saladas', price: 'R$ 18,90', stock: 25, active: true, image: '🥗' },
-    { id: 6, name: 'Água Mineral', category: 'Bebidas', price: 'R$ 3,00', stock: 200, active: true, image: '💧' },
-    { id: 7, name: 'Pizza Calabresa', category: 'Pizzas', price: 'R$ 38,00', stock: 20, active: true, image: '🍕' },
-    { id: 8, name: 'X-Burger', category: 'Lanches', price: 'R$ 15,90', stock: 40, active: true, image: '🍔' },
-    { id: 9, name: 'Refrigerante Lata', category: 'Bebidas', price: 'R$ 4,50', stock: 150, active: true, image: '🥤' },
-    { id: 10, name: 'Onion Rings', category: 'Acompanhamentos', price: 'R$ 14,00', stock: 15, active: false, image: '🧅' },
-];
-
-export default function ListProducts() {
-    const [products, setProducts] = useState(mockProducts);
+export default function ListProducts({ businessId, onEdit, onDelete, refreshTrigger }) {
+    const [products, setProducts] = useState([]);
     const [selected, setSelected] = useState(new Set());
+    const [loading, setLoading] = useState(true);
 
-    const headers = ['Produto', 'Categoria', 'Valor Total', 'Estoque', 'Ações'];
+    useEffect(() => {
+        if (businessId) {
+            fetchProducts();
+        }
+    }, [businessId, refreshTrigger]);
+
+    const fetchProducts = async () => {
+        try {
+            setLoading(true);
+            const response = await api.get('/products', {
+                params: { business_id: businessId }
+            });
+            
+            if (response.data.products) {
+                setProducts(response.data.products);
+            }
+        } catch (error) {
+            console.error('Erro ao buscar produtos:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const formatCurrency = (value) => {
+        if (!value) return 'R$ 0,00';
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(value);
+    };
+
+    const headers = ['Produto', 'Categoria', 'Valor Total', 'Estoque / Tempo', 'Ações'];
 
     const handleSelectAll = (e) => {
         if (e.target.checked) {
@@ -43,49 +62,123 @@ export default function ListProducts() {
         setSelected(newSelected);
     };
 
-    const handleStatusToggle = (id) => {
-        setProducts(products.map(product => 
-            product.id === id ? { ...product, active: !product.active } : product
-        ));
-    };
-
-    const handleEdit = (id) => {
-        console.log('Editar produto:', id);
-    };
-
-    const handleDelete = (id) => {
-        if (window.confirm('Tem certeza que deseja excluir este produto?')) {
-            setProducts(products.filter(product => product.id !== id));
+    const handleStatusToggle = async (id) => {
+        try {
+            const product = products.find(p => p.id === id);
+            const newStatus = product.status === 'active' ? 'inactive' : 'active';
+            
+            await api.put('/products', {
+                id: id,
+                business_id: businessId,
+                status: newStatus
+            });
+            
+            // Atualizar localmente
+            setProducts(products.map(p => 
+                p.id === id ? { ...p, status: newStatus } : p
+            ));
+        } catch (error) {
+            console.error('Erro ao alterar status:', error);
+            alert('Erro ao alterar status. Tente novamente.');
         }
     };
 
-    const handleBulkToggleStatus = () => {
+    const handleEdit = (product) => {
+        if (onEdit) {
+            onEdit(product);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (window.confirm('Tem certeza que deseja excluir este produto?')) {
+            try {
+                await api.delete(`/products/${id}`, {
+                    params: { business_id: businessId }
+                });
+                
+                // Recarregar lista
+                await fetchProducts();
+                
+                if (onDelete) {
+                    onDelete();
+                }
+            } catch (error) {
+                console.error('Erro ao deletar produto:', error);
+                alert('Erro ao deletar produto. Tente novamente.');
+            }
+        }
+    };
+
+    const handleBulkToggleStatus = async () => {
         const selectedIds = Array.from(selected);
-        setProducts(products.map(product => 
-            selectedIds.includes(product.id)
-                ? { ...product, active: !product.active } 
-                : product
-        ));
+        try {
+            for (const id of selectedIds) {
+                const product = products.find(p => p.id === id);
+                const newStatus = product.status === 'active' ? 'inactive' : 'active';
+                
+                await api.put('/products', {
+                    id: id,
+                    business_id: businessId,
+                    status: newStatus
+                });
+            }
+            
+            // Recarregar lista
+            await fetchProducts();
+            setSelected(new Set());
+        } catch (error) {
+            console.error('Erro ao alterar status em lote:', error);
+            alert('Erro ao alterar status. Tente novamente.');
+        }
     };
 
     const handleBulkEdit = () => {
-        console.log('Editar selecionados:', Array.from(selected));
-    };
-
-    const handleBulkDelete = () => {
-        if (window.confirm(`Tem certeza que deseja excluir ${selected.size} produto(s)?`)) {
-            setProducts(products.filter(product => !selected.has(product.id)));
-            setSelected(new Set());
+        // Editar apenas o primeiro produto selecionado
+        const selectedIds = Array.from(selected);
+        if (selectedIds.length === 1) {
+            const productId = selectedIds[0];
+            const product = products.find(p => p.id === productId);
+            if (product && onEdit) {
+                onEdit(product);
+                setSelected(new Set()); // Limpar seleção após abrir edição
+            }
         }
     };
 
-    const renderActionsButton = () => (
-        <ActionsButton
-            onToggleStatus={handleBulkToggleStatus}
-            onEdit={handleBulkEdit}
-            onDelete={handleBulkDelete}
-        />
-    );
+    const handleBulkDelete = async () => {
+        if (window.confirm(`Tem certeza que deseja excluir ${selected.size} produto(s)?`)) {
+            try {
+                const selectedIds = Array.from(selected);
+                for (const id of selectedIds) {
+                    await api.delete(`/products/${id}`, {
+                        params: { business_id: businessId }
+                    });
+                }
+                
+                // Recarregar lista
+                await fetchProducts();
+                setSelected(new Set());
+            } catch (error) {
+                console.error('Erro ao deletar produtos:', error);
+                alert('Erro ao deletar produtos. Tente novamente.');
+            }
+        }
+    };
+
+    const renderActionsButton = () => {
+        const selectedCount = selected.size;
+        // Mostrar editar apenas se houver exatamente 1 produto selecionado
+        const showEdit = selectedCount === 1;
+        
+        return (
+            <ActionsButton
+                onToggleStatus={handleBulkToggleStatus}
+                onEdit={showEdit ? handleBulkEdit : null}
+                onDelete={handleBulkDelete}
+                showEdit={showEdit}
+            />
+        );
+    };
 
     const renderCheckbox = (product) => (
         <input
@@ -98,29 +191,76 @@ export default function ListProducts() {
 
     const renderRow = (product) => (
         <div className="flex items-center gap-2">
-            <span className="text-base">{product.image}</span>
+            {product.image ? (
+                <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-8 h-8 rounded object-contain bg-gray-100"
+                />
+            ) : (
+                <div className="w-8 h-8 rounded bg-gray-100 flex items-center justify-center">
+                    <span className="text-xs text-gray-400">📦</span>
+                </div>
+            )}
             <span className="text-xs font-medium text-gray-900">{product.name}</span>
         </div>
     );
 
-    const renderAdditionalColumns = (product) => (
-        <>
-            <div className="text-xs text-gray-600">{product.category}</div>
-            <div className="text-xs text-gray-600">{product.price}</div>
-            <div className="text-xs text-gray-600">{product.stock}</div>
-        </>
-    );
+    const renderAdditionalColumns = (product) => {
+        // Estoque / Tempo: se tem estoque mostra estoque, senão mostra tempo
+        const stockOrTime = product.stock > 0 
+            ? `Estoque: ${product.stock}` 
+            : product.preparationTime 
+                ? `Tempo: ${product.preparationTime} min`
+                : '-';
+
+        return (
+            <>
+                <div className="text-xs text-gray-600">{product.categoryName || '-'}</div>
+                <div className="text-xs text-gray-600 font-medium">{formatCurrency(product.salePrice)}</div>
+                <div className="text-xs text-gray-600">{stockOrTime}</div>
+            </>
+        );
+    };
 
     const actions = (product) => (
         <>
             <StatusButton 
-                isActive={product.active} 
+                isActive={product.status === 'active'} 
                 onClick={() => handleStatusToggle(product.id)} 
             />
-            <EditButton onClick={() => handleEdit(product.id)} />
+            <EditButton onClick={() => handleEdit(product)} />
             <DeleteButton onClick={() => handleDelete(product.id)} />
         </>
     );
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <p className="text-gray-500">Carregando produtos...</p>
+            </div>
+        );
+    }
+
+    if (products.length === 0) {
+        return (
+            <div className="flex flex-col items-center justify-center h-64 gap-4">
+                <div className="flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-blue-100 to-emerald-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 text-blue-600">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.75 7.5h16.5M10 11.25v-6m4 6v-6" />
+                    </svg>
+                </div>
+                <div className="text-center">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                        Nenhum produto ainda
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                        Comece adicionando seus produtos para começar a vender!
+                    </p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="h-full">

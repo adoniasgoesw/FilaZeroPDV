@@ -75,3 +75,5 @@ const Notification = ({ id, message, type, onClose }) => {
 
 export default Notification;
 
+
+

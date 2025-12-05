@@ -1,73 +1,41 @@
 import hamburguerImg from '../../assets/hamburguer.png';
 import batatasFritasImg from '../../assets/batatas-fritas.png';
 import pizzaImg from '../../assets/pizza.png';
+import queijoImg from '../../assets/queijo.png';
 
 export default function FoodIcons() {
-    // Reduced quantity, larger size, distributed in top, middle, bottom
-    const topPositions = [
-        { left: '15%', rotate: '15deg', img: hamburguerImg, alt: 'Hamburger' },
-    ];
-
-    const middlePositions = [
-        { left: '75%', rotate: '-35deg', img: batatasFritasImg, alt: 'Batatas Fritas' },
-    ];
-
-    const bottomPositions = [
-        { left: '50%', rotate: '45deg', img: pizzaImg, alt: 'Pizza' },
+    // 8 icons well distributed across the screen
+    const icons = [
+        // Top row
+        { left: '10%', top: '15%', rotate: '12deg', img: hamburguerImg, alt: 'Hamburger' },
+        { left: '30%', top: '12%', rotate: '-18deg', img: pizzaImg, alt: 'Pizza' },
+        { left: '70%', top: '18%', rotate: '25deg', img: batatasFritasImg, alt: 'Batatas Fritas' },
+        { left: '90%', top: '14%', rotate: '-15deg', img: queijoImg, alt: 'Queijo' },
+        
+        // Bottom row
+        { left: '8%', top: '85%', rotate: '-22deg', img: pizzaImg, alt: 'Pizza' },
+        { left: '25%', top: '88%', rotate: '18deg', img: hamburguerImg, alt: 'Hamburger' },
+        { left: '75%', top: '82%', rotate: '-28deg', img: queijoImg, alt: 'Queijo' },
+        { left: '92%', top: '86%', rotate: '20deg', img: batatasFritasImg, alt: 'Batatas Fritas' },
     ];
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {/* Top icons */}
-            {topPositions.map((pos, index) => (
+            {icons.map((icon, index) => (
                 <div 
-                    key={`top-${index}`}
-                    className="absolute top-20" 
+                    key={`icon-${index}`}
+                    className="absolute" 
                     style={{ 
-                        left: pos.left, 
-                        transform: `rotate(${pos.rotate})` 
+                        left: icon.left, 
+                        top: icon.top,
+                        transform: `rotate(${icon.rotate})` 
                     }}
                 >
                     <img 
-                        src={pos.img} 
-                        alt={pos.alt} 
-                        className="w-12 h-12 md:w-20 lg:w-24 opacity-10 md:opacity-15" 
-                    />
-                </div>
-            ))}
-
-            {/* Middle icons */}
-            {middlePositions.map((pos, index) => (
-                <div 
-                    key={`middle-${index}`}
-                    className="absolute top-1/2" 
-                    style={{ 
-                        left: pos.left, 
-                        transform: `translateY(-50%) rotate(${pos.rotate})` 
-                    }}
-                >
-                    <img 
-                        src={pos.img} 
-                        alt={pos.alt} 
-                        className="w-12 h-12 md:w-20 lg:w-24 opacity-10 md:opacity-15" 
-                    />
-                </div>
-            ))}
-
-            {/* Bottom icons */}
-            {bottomPositions.map((pos, index) => (
-                <div 
-                    key={`bottom-${index}`}
-                    className="absolute bottom-20" 
-                    style={{ 
-                        left: pos.left, 
-                        transform: `rotate(${pos.rotate})` 
-                    }}
-                >
-                    <img 
-                        src={pos.img} 
-                        alt={pos.alt} 
-                        className="w-12 h-12 md:w-20 lg:w-24 opacity-10 md:opacity-15" 
+                        src={icon.img} 
+                        alt={icon.alt} 
+                        className="w-14 h-14 md:w-20 md:h-20 lg:w-24 lg:h-24 opacity-10 md:opacity-15 object-contain" 
+                        style={{ aspectRatio: '1/1' }}
                     />
                 </div>
             ))}
